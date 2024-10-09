@@ -10,7 +10,6 @@ const ProfileScreen = () => {
   const [uploading, setUploading] = useState(false);
   const { logout } = useAuth();
 
-  // Solicitar permissões para acessar a câmera e galeria
   useEffect(() => {
     const requestPermissions = async () => {
       const { status: cameraStatus } = await ImagePicker.requestCameraPermissionsAsync();
