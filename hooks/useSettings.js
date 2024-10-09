@@ -1,15 +1,16 @@
 import { useState } from 'react';
 import { doc, setDoc, getDoc } from 'firebase/firestore';
-import { firestore, auth } from '../lib/firebase';
+import { firestore } from '../lib/firebase';
+import { useAuth } from '../contexts/AuthContext';
 
 export const useSettings = () => {
   const [monthlyIncome, setMonthlyIncome] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const {user} = useAuth();
 
   const fetchMonthlyIncome = async () => {
     setLoading(true);
-    const user = auth.currentUser;
 
     if (user) {
       try {

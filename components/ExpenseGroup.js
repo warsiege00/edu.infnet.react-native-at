@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, FlatList } from 'react-native';
 import { List } from 'react-native-paper';
 import { useSettings } from '../hooks/useSettings';
@@ -6,7 +6,7 @@ import { useExpenses } from '../hooks/useExpenses';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const ExpenseGroup = ({ month, expenses }) => {
-  const { monthlyIncome } = useSettings();
+  const { monthlyIncome, fetchMonthlyIncome } = useSettings();
   const [expanded, setExpanded] = useState(false);
   const { deleteExpense } = useExpenses();
 
@@ -18,6 +18,10 @@ const ExpenseGroup = ({ month, expenses }) => {
   const handleDelete = async (id) => {
     await deleteExpense(id);
   };
+
+  useEffect(() => {
+    fetchMonthlyIncome();
+  }, []);
 
   return (
     <View style={styles.container}>

@@ -3,10 +3,12 @@ import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
 import { Avatar, Button } from 'react-native-paper';
 import * as ImagePicker from 'expo-image-picker';
 import useUser from '../hooks/useUser'; 
+import { useAuth } from '../contexts/AuthContext';
 
 const ProfileScreen = () => {
   const { userData, updateUserPhotoURL, loading, error } = useUser();
   const [uploading, setUploading] = useState(false);
+  const {logout} = useAuth();
 
   const handleImagePick = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
@@ -52,7 +54,11 @@ const ProfileScreen = () => {
             </Button>
             
           </View>
-          
+          <View style={styles.container}>
+            <Button mode="outlined" onPress={logout}>
+              Sair
+            </Button>
+          </View>
         </>
       )}
 
