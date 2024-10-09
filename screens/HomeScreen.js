@@ -47,7 +47,6 @@ const HomeScreen = () => {
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         } 
       />
-      
       <FAB
         style={styles.fab}
         icon="plus"

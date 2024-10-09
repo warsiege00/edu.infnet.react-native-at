@@ -6,16 +6,15 @@ import { useSettings } from '../hooks/useSettings';
 const SettingsScreen = () => {
   const { 
     monthlyIncome, 
-    setMonthlyIncome, 
     loading, 
     error, 
     saveIncome, 
-    fetchMonthlyIncome 
+    setMonthlyIncome 
   } = useSettings();
 
   useEffect(() => {
-    fetchMonthlyIncome();
-  }, []);
+    setMonthlyIncome(monthlyIncome.toString()); 
+  }, [monthlyIncome]);
 
   const handleSaveIncome = async () => {
     await saveIncome(monthlyIncome);

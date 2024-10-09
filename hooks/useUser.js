@@ -12,20 +12,19 @@ const useUser = () => {
 
 
   const updateUserPhotoURL = async (photoURL) => {
-    if (!user) return;
-
+    if (!user) return; 
     try {
       setLoading(true);
       setError(null);
-
-      const userRef = doc(firestore, 'users', user.uid); 
+  
+      const userRef = doc(firestore, 'users', user.uid);
       await updateDoc(userRef, { photoURL });
-
+  
       setUserData((prevData) => ({
         ...prevData,
         photoURL,
       }));
-
+  
       console.log('URL da foto atualizada com sucesso!');
     } catch (error) {
       console.error('Erro ao atualizar a URL da foto:', error);

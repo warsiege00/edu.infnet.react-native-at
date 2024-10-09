@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { doc, setDoc, getDoc } from 'firebase/firestore';
 import { firestore } from '../lib/firebase';
 import { useAuth } from '../contexts/AuthContext';
@@ -7,7 +7,7 @@ export const useSettings = () => {
   const [monthlyIncome, setMonthlyIncome] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const {user} = useAuth();
+  const { user } = useAuth();
 
   const fetchMonthlyIncome = async () => {
     setLoading(true);
@@ -28,6 +28,10 @@ export const useSettings = () => {
     }
   };
 
+  useEffect(() => {
+    fetchMonthlyIncome();
+  }, [user]);
+
   const saveIncome = async (income) => {
     setLoading(true);
     setError('');
@@ -40,6 +44,7 @@ export const useSettings = () => {
     try {
       const docRef = doc(firestore, 'settings', user.uid);
       await setDoc(docRef, { monthlyIncome: parseFloat(income) }, { merge: true });
+      setMonthlyIncome(parseFloat(income));
     } catch (err) {
       setError('Erro ao salvar renda: ' + err.message);
     } finally {
@@ -49,10 +54,10 @@ export const useSettings = () => {
 
   return {
     monthlyIncome,
-    setMonthlyIncome,
     loading,
     error,
-    saveIncome,
+    setMonthlyIncome,
     fetchMonthlyIncome,
+    saveIncome,
   };
 };

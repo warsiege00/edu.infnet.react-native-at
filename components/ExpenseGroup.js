@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet, FlatList } from 'react-native';
 import { List } from 'react-native-paper';
-import { useSettings } from '../hooks/useSettings';
 import { useExpenses } from '../hooks/useExpenses';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const ExpenseGroup = ({ month, expenses, monthlyIncome }) => {
   const [expanded, setExpanded] = useState(false);
   const { deleteExpense } = useExpenses();
+  
 
   const totalExpenses = expenses.reduce((total, expense) => total + expense.amount, 0);
   const balance = monthlyIncome - totalExpenses; 
@@ -27,7 +27,9 @@ const ExpenseGroup = ({ month, expenses, monthlyIncome }) => {
         onPress={handlePress}
       >
         <Text style={styles.total}>Total de Despesas: R$ {totalExpenses.toFixed(2)}</Text>
-        <Text style={styles.balance}>Balanço: R$ {balance.toFixed(2)}</Text>
+        <Text style={[styles.balance, balance < 0 ? styles.negative : styles.positive]}>
+          Balanço: R$ {balance.toFixed(2)}
+        </Text>
 
         <FlatList
           data={expenses}
@@ -64,7 +66,12 @@ const styles = StyleSheet.create({
   },
   balance: {
     fontSize: 16,
+  },
+  positive: {
     color: 'green',
+  },
+  negative: {
+    color: 'red',
   },
   deleteIcon: {
     marginLeft: 8,

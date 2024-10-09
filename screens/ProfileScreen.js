@@ -4,6 +4,8 @@ import { Avatar, Button } from 'react-native-paper';
 import * as ImagePicker from 'expo-image-picker';
 import useUser from '../hooks/useUser'; 
 import { useAuth } from '../contexts/AuthContext';
+import { storage } from '../lib/firebase';
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 
 const ProfileScreen = () => {
   const { userData, updateUserPhotoURL, loading, error } = useUser();
@@ -40,7 +42,7 @@ const ProfileScreen = () => {
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [4, 3],
-      quality: 1,
+      quality: 0.1,
     });
 
     if (!result.canceled) {
@@ -54,7 +56,7 @@ const ProfileScreen = () => {
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [4, 3],
-      quality: 1,
+      quality: 0.1,
     });
 
     if (!result.canceled) {
@@ -63,10 +65,19 @@ const ProfileScreen = () => {
     }
   };
 
+  
   const handleUpload = async (uri) => {
     try {
       setUploading(true);
-      await updateUserPhotoURL(uri);
+      const response = await fetch(uri);
+      const blob = await response.blob();
+  
+      const imageRef = ref(storage, `profileImages/${userData.uid}`);
+  
+      await uploadBytes(imageRef, blob); // Faz o upload da imagem
+      const downloadURL = await getDownloadURL(imageRef); // Obtém a URL da imagem hospedada
+  
+      await updateUserPhotoURL(downloadURL); // Chama a função para atualizar a URL no Firestore
     } catch (error) {
       console.error('Erro ao fazer upload da imagem:', error);
     } finally {
