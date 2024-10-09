@@ -17,7 +17,6 @@ export const useExpenses = () => {
       return;
     }
 
-  
     const q = query(collection(firestore, 'expenses'), where('userId', '==', user.uid));
 
     const unsubscribe = onSnapshot(q, (snapshot) => {

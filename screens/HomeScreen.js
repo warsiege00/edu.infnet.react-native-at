@@ -34,6 +34,9 @@ const HomeScreen = () => {
         renderItem={({ item: monthYear }) => (
           <ExpenseGroup month={monthYear} expenses={groupedExpenses[monthYear]} />
         )}
+        refreshControl={
+         () => {}
+        }
       />
       
       <FAB

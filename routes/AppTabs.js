@@ -32,7 +32,7 @@ export const AppTabs = () => (
     })}
   >
     <Tab.Screen name="Home" component={HomeScreen} />
-    <Tab.Screen name="Profile" component={ProfileScreen} />
+    <Tab.Screen name="Perfil" component={ProfileScreen} />
     <Tab.Screen name="Configurações" component={SettingsScreen} />
   </Tab.Navigator>
 );

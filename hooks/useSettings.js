@@ -31,8 +31,6 @@ export const useSettings = () => {
   const saveIncome = async (income) => {
     setLoading(true);
     setError('');
-
-    const user = auth.currentUser;
     if (!user) {
       setError('Usuário não autenticado.');
       setLoading(false);
