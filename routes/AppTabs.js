@@ -26,7 +26,7 @@ export const AppTabs = () => (
 
         return <Ionicons name={iconName} size={size} color={color} />;
       },
-      tabBarActiveTintColor: 'blue',
+      tabBarActiveTintColor: 'purple',
       tabBarInactiveTintColor: 'gray',
       tabBarStyle: [{ display: 'flex' }],
     })}

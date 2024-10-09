@@ -1,33 +1,57 @@
-import { useNavigation } from '@react-navigation/native';
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import { useAuth } from '../contexts/AuthContext';
-
-
-
+import { View, FlatList, ActivityIndicator } from 'react-native';
+import { FAB } from 'react-native-paper';
+import { useNavigation } from '@react-navigation/native';
+import { useExpenses } from '../hooks/useExpenses';
+import ExpenseGroup from '../components/ExpenseGroup';
 
 const HomeScreen = () => {
+  const { expenses, loading } = useExpenses(); 
   const navigation = useNavigation();
-  const {user, logout} = useAuth();
+
+  if (loading) {
+    return <ActivityIndicator animating={true} size="large" />;
+  }
+
+  const groupedExpenses = expenses.reduce((acc, expense) => {
+    const [day, month, year] = expense.date.split('/'); 
+    const date = new Date(year, month - 1, day);
+
+    const monthYear = date.toLocaleString('pt-Br', { month: 'long', year: 'numeric' })
+
+    if (!acc[monthYear]) {
+      acc[monthYear] = [];
+    }
+    acc[monthYear].push(expense);
+    return acc;
+  }, {});
 
   return (
-    <View>
-      <Text>Bem-vindo ao Dashboard!</Text>
+    <View style={{ flex: 1 }}>
+      <FlatList
+        data={Object.keys(groupedExpenses)}
+        keyExtractor={(item) => item}
+        renderItem={({ item: monthYear }) => (
+          <ExpenseGroup month={monthYear} expenses={groupedExpenses[monthYear]} />
+        )}
+      />
+      
+      <FAB
+        style={styles.fab}
+        icon="plus"
+        onPress={() => navigation.navigate('AddExpense')} 
+      />
     </View>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
+const styles = {
+  fab: {
+    position: 'absolute',
+    margin: 16,
+    right: 0,
+    bottom: 0,
   },
-  welcomeText: {
-    fontSize: 18,
-    textAlign: 'center',
-    marginTop: 20,
-  },
-});
-
+};
 
 export default HomeScreen;

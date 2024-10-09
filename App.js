@@ -6,7 +6,12 @@ import { AuthStack } from './routes/AuthStack';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 // import { ThemeContext } from './contexts/ThemeContext';
 import { PaperProvider } from 'react-native-paper';
+import { createStackNavigator } from '@react-navigation/stack';
+import AddExpenseScreen from './screens/AddExpenseScreen';
+import { pt, registerTranslation } from 'react-native-paper-dates'
 
+registerTranslation('pt', pt)
+const Stack = createStackNavigator();
 
 const AppContent = () => {
   const { user, loading } = useAuth();
@@ -21,7 +26,22 @@ const AppContent = () => {
 
   return (
     <NavigationContainer>
-      {user ? <AppTabs /> : <AuthStack />}
+      {
+        user ?
+          (<Stack.Navigator>
+            <Stack.Screen 
+              name="Despesas" 
+              component={AppTabs} 
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen 
+              name="AddExpense" 
+              component={AddExpenseScreen} 
+              options={{ title: 'Adicionar Despesa' }} 
+            />
+          </Stack.Navigator>) 
+          : <AuthStack /> 
+      }
     </NavigationContainer>
   );
 };
@@ -33,9 +53,9 @@ export default function App() {
     <ThemeProvider>
       {/* <PaperProvider theme={theme}> */}
       <PaperProvider>
-        <AuthProvider>
-          <AppContent />
-        </AuthProvider>
+          <AuthProvider>
+            <AppContent />
+          </AuthProvider>
       </PaperProvider>
     </ThemeProvider>
   );
