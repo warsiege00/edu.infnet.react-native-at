@@ -39,3 +39,8 @@ Este é um aplicativo desenvolvido para controle de despesas pessoais, parte do 
 
 -Este projeto está licenciado sob a Licença MIT. Veja o arquivo LICENSE para mais informações.
 
+## Teste o Aplicativo no Expo
+
+Você pode testar o aplicativo diretamente pelo Expo:
+
+[![Rodar no Expo](https://img.shields.io/badge/Rodar%20no%20Expo-4630EB?style=for-the-badge&logo=EXPO&logoColor=white)](https://expo.dev/preview/update?message=Ajuste%20readme&updateRuntimeVersion=1.0.0&createdAt=2024-10-10T12%3A06%3A28.541Z&slug=exp&projectId=8c5fee43-1203-4fdc-8fe5-2605240e7919&group=b8c3c898-12a8-49c0-962a-298e6c8a196c)

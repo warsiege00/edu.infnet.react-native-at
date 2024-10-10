@@ -1,13 +1,13 @@
 {
   "expo": {
-    "name": "react-native-tp3",
-    "slug": "react-native-tp3",
+    "name": "react-native-at",
+    "slug": "react-native-at",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/icon.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -22,6 +22,17 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "8c5fee43-1203-4fdc-8fe5-2605240e7919"
+      }
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/8c5fee43-1203-4fdc-8fe5-2605240e7919"
     }
   }
 }
